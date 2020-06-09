@@ -9,16 +9,18 @@ import {
   CardHeader,
 } from "reactstrap";
 import AlertComponent from "../alert";
+import EditTask from "./editTask";
 import Swal from "sweetalert2";
 
 function Tasks() {
   const state = useSelector((state) => state.tasks);
   const [task, setTask] = useState("");
+  const [modal, setModal] = useState(false);
+  const [dataTask, setDataTask] = useState(null);
+
   const [error, setError] = useState({
     status: false,
   });
-
-  console.log(state);
 
   const dispatch = useDispatch();
 
@@ -26,7 +28,7 @@ function Tasks() {
     if (!task.title) {
       return setError({
         status: true,
-        message: "O titulo é obrigatorio!",
+        message: "O título é obrigatório!",
         type: "danger",
       });
     }
@@ -58,7 +60,15 @@ function Tasks() {
     });
   }, [task]);
 
-  console.log("asdasd");
+  const setModalEditCallback = useCallback(
+    (task) => {
+      return (event) => {
+        setDataTask(task);
+        setModal(!modal);
+      };
+    },
+    [modal]
+  );
 
   return (
     <>
@@ -113,6 +123,13 @@ function Tasks() {
                       </CardBody>
                       <CardFooter className="d-flex justify-content-end">
                         <Button
+                          color="primary"
+                          className="mr-2"
+                          onClick={setModalEditCallback(task)}
+                        >
+                          Editar
+                        </Button>
+                        <Button
                           color="danger"
                           onClick={() =>
                             dispatch({ type: "DELETE_TASK", id: task.id })
@@ -129,6 +146,7 @@ function Tasks() {
           </div>
         </div>
       </div>
+      <EditTask modal={modal} setModal={setModal} data={dataTask} />
     </>
   );
 }

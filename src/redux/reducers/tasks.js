@@ -14,6 +14,18 @@ export const tasks = (state = initialState, action) => {
       return state.filter((task) => {
         return task.id !== action.id;
       });
+
+    case "UPDATE_TASK":
+      return state.map((task) => {
+        if (task.id === action.id) {
+          return {
+            ...task,
+            title: action.title,
+            description: action.description,
+          };
+        }
+        return task;
+      });
     default:
       return state;
   }

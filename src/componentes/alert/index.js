@@ -15,7 +15,7 @@ function AlertComponent({ setError, error, message, type }) {
   }, [error]);
   return (
     <Container>
-      <Alert color={type} isOpen={error}>
+      <Alert color={type} isOpen={error} className="text-center">
         {message}
       </Alert>
     </Container>
