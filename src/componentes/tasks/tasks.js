@@ -38,7 +38,7 @@ function Tasks() {
         showCancelButton: true,
         confirmButtonColor: "#77DD77",
         cancelButtonColor: "#F8665E",
-        cancelBUttonText: "Voltar",
+        cancelButtonText: "Voltar",
         confirmButtonText: "Sim",
       }).then((result) => {
         if (result.value) {
