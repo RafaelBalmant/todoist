@@ -47,7 +47,7 @@ function Tasks() {
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#77DD77",
-        cancelButtonColor: "#F8665E",
+        cancelButtonColor: "#ee6c4d",
         cancelButtonText: "Voltar",
         confirmButtonText: "Sim",
       }).then((result) => {
@@ -86,7 +86,7 @@ function Tasks() {
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#77DD77",
-        cancelButtonColor: "#F8665E",
+        cancelButtonColor: "#ee6c4d",
         cancelButtonText: "Voltar",
         confirmButtonText: "Sim",
       }).then((result) => {
@@ -154,19 +154,26 @@ function Tasks() {
                   return (
                     <div className="col-12 col-md-4 col-lg-4 mt-4">
                       <Card>
-                        <CardHeader>{task.title}</CardHeader>
+                        <CardHeader
+                          style={{
+                            backgroundColor: "#293241",
+                            color: "white",
+                          }}
+                        >
+                          {task.title}
+                        </CardHeader>
                         <CardBody>
                           {(task.description?.length >= 90 &&
                             task.description.substring(0, 90) + " ...") ||
                             task.description}
                         </CardBody>
                         <CardFooter className="d-flex justify-content-end">
-                          <Button
-                            color="danger"
+                          <Btn
+                            color="#ee6c4d"
                             onClick={deleteUserCallback(task)}
                           >
                             <IconTrash />
-                          </Button>
+                          </Btn>
                           <Btn
                             className="ml-2"
                             onClick={setModalEditCallback(task)}

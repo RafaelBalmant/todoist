@@ -16,11 +16,11 @@ export const LabelInput = styled.label`
 `;
 
 export const Btn = styled(Button)`
-  background-color: #586d8a;
+  background-color: ${(props) => props.color || "#586d8a"};
   border: none;
   &&:hover {
     transition: 1s;
-    background-color: #557093;
+    opacity: 0.9;
   }
 `;
 
@@ -33,6 +33,9 @@ export const HeaderCard = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 3px 3px 0 0;
+  h3 {
+    margin: 0;
+  }
 `;
 
 export const IconFile = styled(AiFillFile)`
@@ -55,4 +58,5 @@ export const IconTrash = styled(FiTrash)`
   width: 20px;
   height: 20px;
   margin-bottom: 2px;
+  color: white;
 `;
