@@ -9,6 +9,7 @@ import {
   Input,
   Button,
 } from "reactstrap";
+import { Btn, IconFile } from "../styles";
 import Swal from "sweetalert2";
 
 function EditTask({ modal, setModal, data }) {
@@ -88,9 +89,10 @@ function EditTask({ modal, setModal, data }) {
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={dispatchTaskCallback}>
-            Enviar
-          </Button>
+          <Btn onClick={dispatchTaskCallback}>
+            Cadastrar
+            <IconFile />
+          </Btn>
         </ModalFooter>
       </Modal>
     </>

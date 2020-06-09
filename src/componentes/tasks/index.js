@@ -11,6 +11,14 @@ import {
 import AlertComponent from "../alert";
 import EditTask from "./editTask";
 import Swal from "sweetalert2";
+import {
+  HeaderContainer,
+  Btn,
+  HeaderCard,
+  IconFile,
+  IconEdit,
+  IconTrash,
+} from "./styles";
 
 function Tasks() {
   const state = useSelector((state) => state.tasks);
@@ -70,6 +78,26 @@ function Tasks() {
     [modal]
   );
 
+  const deleteUserCallback = useCallback((task) => {
+    return (event) => {
+      Swal.fire({
+        title: "Tem certeza que deseja deletar essa tarefa?",
+        text: "Essa ação não podera ser revertida",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#77DD77",
+        cancelButtonColor: "#F8665E",
+        cancelButtonText: "Voltar",
+        confirmButtonText: "Sim",
+      }).then((result) => {
+        if (result.value) {
+          console.log("teste");
+          return dispatch({ type: "DELETE_TASK", id: task.id });
+        }
+      });
+    };
+  }, []);
+
   return (
     <>
       <AlertComponent
@@ -80,9 +108,10 @@ function Tasks() {
       />
       <div className="p-5">
         <div className="row">
-          <div className="col-12">
-            <div className="d-flex ">
+          <HeaderContainer className="col-12 col-md-12 col-lg-6">
+            <div>
               <Input
+                placeholder="Titulo"
                 value={task.title}
                 error={error.status}
                 onChange={(event) =>
@@ -93,12 +122,10 @@ function Tasks() {
                 }
                 className="mr-5"
               />
-              <Button color="success" onClick={inserTaskCallback}>
-                Cadastrar
-              </Button>
             </div>
-            <div className="mt-4">
+            <div className="mt-3">
               <Input
+                placeholder="Descrição"
                 type="textarea"
                 value={task.description}
                 error={error.status}
@@ -110,40 +137,50 @@ function Tasks() {
                 }
               />
             </div>
-            <div className="row">
-              {state?.map((task) => {
-                return (
-                  <div className="col-12 col-md-4 col-lg-4 mt-4">
-                    <Card>
-                      <CardHeader>{task.title}</CardHeader>
-                      <CardBody>
-                        {(task.description?.length >= 90 &&
-                          task.description.substring(0, 90) + " ...") ||
-                          task.description}
-                      </CardBody>
-                      <CardFooter className="d-flex justify-content-end">
-                        <Button
-                          color="primary"
-                          className="mr-2"
-                          onClick={setModalEditCallback(task)}
-                        >
-                          Editar
-                        </Button>
-                        <Button
-                          color="danger"
-                          onClick={() =>
-                            dispatch({ type: "DELETE_TASK", id: task.id })
-                          }
-                        >
-                          Excluir
-                        </Button>
-                      </CardFooter>
-                    </Card>
-                  </div>
-                );
-              })}
+            <div className="mt-4 d-flex justify-content-end">
+              <Btn onClick={inserTaskCallback}>
+                Cadastrar
+                <IconFile />
+              </Btn>
             </div>
-          </div>
+          </HeaderContainer>
+          <Card className="mt-2 w-100">
+            <HeaderCard>
+              <h3>Tarefas</h3>
+            </HeaderCard>
+            <CardBody>
+              <div className="row">
+                {state?.map((task) => {
+                  return (
+                    <div className="col-12 col-md-4 col-lg-4 mt-4">
+                      <Card>
+                        <CardHeader>{task.title}</CardHeader>
+                        <CardBody>
+                          {(task.description?.length >= 90 &&
+                            task.description.substring(0, 90) + " ...") ||
+                            task.description}
+                        </CardBody>
+                        <CardFooter className="d-flex justify-content-end">
+                          <Button
+                            color="danger"
+                            onClick={deleteUserCallback(task)}
+                          >
+                            <IconTrash />
+                          </Button>
+                          <Btn
+                            className="ml-2"
+                            onClick={setModalEditCallback(task)}
+                          >
+                            Editar <IconEdit />
+                          </Btn>
+                        </CardFooter>
+                      </Card>
+                    </div>
+                  );
+                })}
+              </div>
+            </CardBody>
+          </Card>
         </div>
       </div>
       <EditTask modal={modal} setModal={setModal} data={dataTask} />
